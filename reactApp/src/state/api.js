@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5001" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://192.168.196.45:5001" }),
   reducerPath: "adminApi",
   tagTypes: [
     "User",

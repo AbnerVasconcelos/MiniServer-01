@@ -16,6 +16,7 @@ const InfoCard = ({
   programmedValue,
   actualValue,
   unit,
+  socketVariavel,
   inputValidation = {
     maxLength: 4,
     pattern: /^\d{1,4}$/,
@@ -64,7 +65,7 @@ const sendData = () => {
   if (inputValidation.pattern.test(inputValue)) {
     const numericValue = parseInt(normalizedValue, 10);
     // Modificação aqui - criar um objeto com a chave dinâmica
-    const payload = { [title]: numericValue };
+    const payload = { [socketVariavel]: numericValue };
     console.log("Objeto enviado:", payload);
     // Aqui você pode enviar o payload via socket ou outra ação necessária
     closeModal();

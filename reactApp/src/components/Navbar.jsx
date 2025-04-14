@@ -19,6 +19,10 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import Delfos from "./Delfos";
+import Flag from 'react-world-flags';
+import BotaoOnOff from "./BotaoOnOff";
+
 
 const initialAlarms = [
   { id: 1, message: "Queda de comunicação com o PLC !", active: true },
@@ -66,49 +70,55 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     <AppBar
       sx={{
         position: "static",
-        background: "none",
+        background: theme.palette.primary[700],
         boxShadow: "none",
       }}
     >
-      <Toolbar sx={{ justifyContent: "space-between", position: "relative" }}>
+      <Toolbar sx={{ justifyContent: "space-between", position: "relative"  }}>
         {/* LEFT SIDE */}
-        <FlexBetween>
+        <FlexBetween sx={{ maxHeight: "64px", overflow: "hidden" }}>
           <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             <MenuIcon />
           </IconButton>
+          <Box display="flex" flexDirection="row" alignItems="center" gap="0.5rem" height="100%">
+          <Delfos />
+          <BotaoOnOff on={false} onClick={() => {}} socketVariavel="habilitaDosagem" />
+          </Box>
         </FlexBetween>
 
-        {/* CENTER: Data e Hora */}
-        <Box>
-          <Typography
-            variant="h6"
-            sx={{
-              fontSize: "1rem", // letra aumentada
-              color: theme.palette.text.secondary, // utiliza a cor base do tema
-              fontWeight: 600,
-            }}
-          >
-            {currentTime.toLocaleDateString()} {currentTime.toLocaleTimeString()}
-          </Typography>
-        </Box>
-
         {/* RIGHT SIDE */}
-        <FlexBetween gap="1.5rem">
+        <FlexBetween gap="0.5rem">
+
+        <div style={{ display: 'flex', gap: '1rem' }}>
+      <Flag code="BR" style={{ width: 48, height: 32 }} />
+      <Flag code="ES" style={{ width: 48, height: 32 }} />
+      <Flag code="US" style={{ width: 48, height: 32 }} />
+    </div>
           <IconButton onClick={() => dispatch(setMode())}>
             <LightModeOutlined sx={{ fontSize: "25px" }} />
           </IconButton>
+          
+           {/* CENTER: Data e Hora */}
+           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Typography variant="body2" sx={{ fontSize: '0.8rem' }}>
+          {currentTime.toLocaleDateString()}
+        </Typography>
+        <Typography variant="body2" sx={{ fontSize: '0.8rem' }}>
+          {currentTime.toLocaleTimeString(undefined, {hour: '2-digit', minute:'2-digit'})}
+        </Typography>
+      </Box>
         </FlexBetween>
 
         {/* Container de alertas – comentado para este exemplo */}
-        {/*
-        <Box
+        
+        {/* <Box
           sx={{
             position: "absolute",
             top: "10px",
             left: isSidebarOpen ? "100px" : "50%",
             transform: isSidebarOpen ? "none" : "translateX(-50%)",
             width: isSidebarOpen ? "calc(100% - 200px)" : "100%",
-            maxWidth: "800px",
+            maxWidth: "700px",
             zIndex: 1300,
           }}
         >
@@ -172,8 +182,8 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 </Collapse>
               </Box>
             ))}
-        </Box>
-        */}
+        </Box> */}
+        
       </Toolbar>
     </AppBar>
   );

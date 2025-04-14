@@ -23,13 +23,13 @@ export const tokensDark = {
     400: "#4d547d",  //"#4d547d"
     500: "#003352",  // "#003251" // "#21295c" cor de fundo dos box e sidebar
     600: "#00415e", //  "#00415e", //  "#191F45" cor de fundo
-    700: "#141937",  //"#141937"
-    800: "#0d1025",  //"#0d1025"
-    900: "#002136",  //"#003a58"
+    700: "#001f31",  //"#141937"
+    800: "#4F4F4F",  //"#0d1025"
+    900: "#001d2f",  //"#003a58"
   },
   secondary: {
     // Blue 
-    50: "#f0f0f0", // manually adjusted
+    50: "#f8f9fa", // manually adjusted
     100: "#fff6e0", // Titulos das caixas e side bars
     200: "#ffedc2", // Barra gráfica  icones do side bar
     300: "#ffe3a3", //  icones dentro das scenas titulos do text field seleção do side bar

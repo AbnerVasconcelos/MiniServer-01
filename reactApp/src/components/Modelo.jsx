@@ -56,27 +56,24 @@ const Model = ({
 
   // Estado para os rótulos (receitas) – cada um com tag e valor.
   const [receitas, setReceitas] = useState({
-    receitaA: { tag: socketTagA || "A", value: socketReceitaA || Math.random() * 100 },
-    receitaB: { tag: socketTagB || "B", value: socketReceitaB || Math.random() * 100 },
-    receitaC: { tag: socketTagC || "C", value: socketReceitaC || Math.random() * 100 },
-    receitaD: { tag: socketTagD || "D", value: socketReceitaD || Math.random() * 100 },
-    balancaA: { tag: socketTagBalanca || "Balança", value: socketReceitaBalancaA || Math.random() * 100 },
-    mixer: { tag: socketTagMisturador || "Misturador", value: socketReceitaMisturador || Math.random() * 100 },
+    receitaA: { tag: socketTagA || "A", value: socketReceitaA },
+    receitaB: { tag: socketTagB || "B", value: socketReceitaB },
+    receitaC: { tag: socketTagC || "C", value: socketReceitaC },
+    receitaD: { tag: socketTagD || "D", value: socketReceitaD },
+    balancaA: { tag: socketTagBalanca || "Balança", value: socketReceitaBalancaA },
+    mixer: { tag: socketTagMisturador || "Misturador", value: socketReceitaMisturador },
   });
 
-  // Simulação de atualização via socket (atualiza a cada 1 segundo)
+  // Atualiza os valores conforme os dados recebidos via socket.io
   useEffect(() => {
-    const interval = setInterval(() => {
-      setReceitas({
-        receitaA: { tag: socketTagA || "A", value: socketReceitaA || Math.random() * 100 },
-        receitaB: { tag: socketTagB || "B", value: socketReceitaB || Math.random() * 100 },
-        receitaC: { tag: socketTagC || "C", value: socketReceitaC || Math.random() * 100 },
-        receitaD: { tag: socketTagD || "D", value: socketReceitaD || Math.random() * 100 },
-        balancaA: { tag: socketTagBalanca || "Balança", value: socketReceitaBalancaA || Math.random() * 100 },
-        mixer: { tag: socketTagMisturador || "Misturador", value: socketReceitaMisturador || Math.random() * 100 },
-      });
-    }, 1000);
-    return () => clearInterval(interval);
+    setReceitas({
+      receitaA: { tag: socketTagA || "A", value: socketReceitaA },
+      receitaB: { tag: socketTagB || "B", value: socketReceitaB },
+      receitaC: { tag: socketTagC || "C", value: socketReceitaC },
+      receitaD: { tag: socketTagD || "D", value: socketReceitaD },
+      balancaA: { tag: socketTagBalanca || "Balança", value: socketReceitaBalancaA },
+      mixer: { tag: socketTagMisturador || "Misturador", value: socketReceitaMisturador },
+    });
   }, [
     socketTagA,
     socketReceitaA,
@@ -329,12 +326,11 @@ ${shader.fragmentShader}`.replace(
       };
       materials.Misturador.needsUpdate = true;
     }
-    // Para os sensores e unidades de vácuo – aqui aplicamos o efeito de blink conforme suas respectivas flags.
+    // Para os sensores e unidades de vácuo – aplicamos o efeito de blink conforme as flags
     if (materials.SensorA) {
       materials.SensorA.onBeforeCompile = (shader) => {
         shader.uniforms.time = { value: 0 };
         shader.uniforms.activateBlink = { value: socketSensorA ? 1.0 : 0.0 };
-        // Se desejar incluir efeito de blink, adicione código no fragment shader.
         shader.fragmentShader = `uniform float time;
 uniform float activateBlink;
 ${shader.fragmentShader}`.replace(
@@ -845,11 +841,11 @@ const ModelViewerWrapper = ({
   const modelParams = {
     position: [0, -3.5, -3],
     rotation: [0.49, 2.93, 0],
-    scale: [5, 5, 5],
+    scale: [4.7, 4.7, 4.7],
     initialFillLevel: 0,
     fillSpeed: 0.1,
     maxFillLevel: 50,
-    fillColor: colorFunil, // não usado diretamente agora
+    fillColor: colorFunil,
     mixFactor: 0.2,
     ambientLightIntensity: 0.5,
     directionalLightIntensity: 0.4,
@@ -862,7 +858,7 @@ const ModelViewerWrapper = ({
       position: [0, -4, 10],
       rotation: [0, -0.19, 0],
       fov: 50,
-      near: 0.9,
+      near: 0.7,
       far: 1500,
     },
     enableZoom: false,

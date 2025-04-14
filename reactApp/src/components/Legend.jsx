@@ -32,7 +32,7 @@ const Legend = () => {
           sx={{
             width: '12px',
             height: '12px',
-            backgroundColor: 'red', // Cor vermelha para Atual
+            backgroundColor: '#00ffff', // Cor vermelha para Atual
             borderRadius: '50%',
           }}
         />

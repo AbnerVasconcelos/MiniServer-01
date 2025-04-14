@@ -8,19 +8,30 @@ import ButtonTrueFalse from "./ButtonTrueFalse";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 
+
 const StatBoxMotores = ({
+  jsonOnOff,
+  jsonAutMan,
   title,
   value,
   unit,
+  textFalseOnOff,
+  textTrueOnoff,
+  textTrueControl,
+  textFalseControl,
   icon,
   ligado,
+  onOff,
+  autManual,
   minValue,
   maxValue,
   dialogTitle,
   dialogContent,
   dialogActions,
+  socketVariavel,
+  erro, // nova prop "erro"
   inputValidation = {
-    maxLength: 5, 
+    maxLength: 5,
     pattern: /^\d{1,2},\d{2}$/,
     errorMessage: "O formato deve ser 00,00!"
   }
@@ -62,13 +73,18 @@ const StatBoxMotores = ({
   const sendData = () => {
     if (inputValidation.pattern.test(inputValue)) {
       const numericValue = parseInt(inputValue.replace(/,/g, ''), 10);
-      const payload = { tag: title, value: numericValue };
+      const payload = { tag: socketVariavel, value: numericValue };
       console.log("Objeto enviado:", payload);
       closeModal();
     } else {
       setErrorMessage("Entrada Inválida");
     }
   };
+
+  // Determina a cor de fundo considerando a prop erro
+  const backgroundColor = erro 
+    ? theme.palette.error.main 
+    : (ligado ? theme.palette.secondary[900] : theme.palette.background.alt);
 
   return (
     <>
@@ -80,9 +96,7 @@ const StatBoxMotores = ({
         justifyContent="space-between"
         p="1rem 1rem"
         flex="1 1 100%"
-        backgroundColor={
-          ligado ? theme.palette.secondary[900] : theme.palette.background.alt
-        }
+        backgroundColor={backgroundColor}
         borderRadius="0.55rem"
         sx={{
           cursor: "pointer",
@@ -116,27 +130,39 @@ const StatBoxMotores = ({
             unit={unit}
           />
         </Box>
-        {/* Envolve os botões em um container que impede a propagação do clique */}
+        {/* Container para os botões posicionados verticalmente, ocupando 100% da largura */}
         <Box
-              onClick={(e) => e.stopPropagation()}
-              sx={{
-              position: "relative",
-              top: "5px",
-              left: "0px",
-              zIndex: 10,
-              display: "flex",
-              flexDirection: "row",
-              width: "100%",
-            }}
-          >
-          <Box sx={{ flex: 1 }}>
-            <ButtonTrueFalse tag={title} socketVariavel={true} textFalse={"Ligado"} textTrue={"Desligado"} />
+          onClick={(e) => e.stopPropagation()}
+          sx={{
+            position: "relative",
+            top: "5px",
+            left: "0px",
+            zIndex: 10,
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+          }}
+        >
+          <Box sx={{ width: "100%", mb: 1 }}>
+            <ButtonTrueFalse 
+              tag={jsonOnOff} 
+              value={onOff} 
+              textFalse={textFalseOnOff} 
+              textTrue={textTrueOnoff}
+              // Se o componente suportar prop "style" ou "fullWidth", garanta 100% de largura:
+              style={{ width: "100%" }}
+            />
           </Box>
-          <Box sx={{ flex: 0.4 }}>
-            <ButtonTrueFalse tag={title} socketVariavel={true} textFalse={"Manual"} textTrue={"Automatico"} />
+          <Box sx={{ width: "100%" }}>
+            <ButtonTrueFalse 
+              tag={jsonAutMan} 
+              value={autManual} 
+              textFalse={textFalseControl} 
+              textTrue={textTrueControl}
+              style={{ width: "100%" }}
+            />
           </Box>
-</Box>
-
+        </Box>
       </Box>
 
       {/* Diálogo para o teclado virtual */}

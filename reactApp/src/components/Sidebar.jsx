@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Divider,
@@ -13,36 +13,27 @@ import {
   useTheme,
 } from "@mui/material";
 import {
- 
   ChevronLeft,
   ChevronRightOutlined,
-  HomeOutlined,
-  Thermostat,
   Speed,
   WarningAmber,
-  Autorenew,
-  Description,
 } from "@mui/icons-material";
-import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
 import SettingsIcon from '@mui/icons-material/Settings';
 import DescriptionIcon from '@mui/icons-material/Description';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
-
-
-
+import Delfos from "./Delfos";
 const navItems = [
   {
     text: "Operacao",
-    icon: <Speed  />,
+    icon: <Speed />,
   },
   {
     text: "MENU",
     icon: null,
   },
-
   {
     text: "Receitas",
     icon: <DescriptionIcon />,
@@ -51,8 +42,6 @@ const navItems = [
     text: "Producao",
     icon: <TrendingUpIcon />,
   },
-
-  
   {
     text: "Alarmes",
     icon: <WarningAmber />,
@@ -98,20 +87,20 @@ const Sidebar = ({
           sx={{
             width: drawerWidth,
             "& .MuiDrawer-paper": {
-              color: theme.palette.secondary[200],
+              color: theme.palette.primary[200],
               backgroundColor: theme.palette.background.alt,
-              boxSixing: "border-box",
+              boxSizing: "border-box",
               borderWidth: isNonMobile ? 0 : "2px",
               width: drawerWidth,
             },
           }}
         >
           <Box width="100%">
-            <Box m="1.5rem 1rem 1rem 4rem">
+          <Box m="1.5rem 1rem 1rem 4rem">
               <FlexBetween color={theme.palette.secondary.main}>
-                <Box display="flex" alignItems="center" gap="1rem">
-                  <Typography variant="h3" fontWeight="bold" position="center">
-                    RVT 
+                <Box display="flex" alignItems="left" gap="1rem" sx={{ marginLeft: "-2rem" }}>
+                  <Typography variant="h3" fontWeight="bold">
+                    Palantir
                   </Typography>
                 </Box>
                 {!isNonMobile && (
@@ -121,16 +110,20 @@ const Sidebar = ({
                 )}
               </FlexBetween>
             </Box>
+            
+
+            {/* Lista de Navegação */}
             <List>
               {navItems.map(({ text, icon }) => {
                 if (!icon) {
                   return (
-                    
-                    <Typography variant="h5"  key={text} sx={{ m: "1.5rem 1.5rem 0.5rem 3.5rem" }}>
+                    <Typography
+                      variant="h5"
+                      key={text}
+                      sx={{ m: "1.5rem 1.5rem 0.5rem 2rem" }}
+                    >
                       {text}
                     </Typography>
-                     
-                    
                   );
                 }
                 const lcText = text.toLowerCase();
@@ -142,9 +135,7 @@ const Sidebar = ({
                         navigate(`/${lcText}`);
                         setActive(lcText);
                       }}
-                      
                       sx={{
-                        
                         backgroundColor:
                           active === lcText
                             ? theme.palette.secondary[300]
@@ -166,7 +157,7 @@ const Sidebar = ({
                       >
                         {icon}
                       </ListItemIcon>
-                      <ListItemText primary={text}  />
+                      <ListItemText primary={text} />
                       {active === lcText && (
                         <ChevronRightOutlined sx={{ ml: "auto" }} />
                       )}
@@ -177,15 +168,15 @@ const Sidebar = ({
             </List>
           </Box>
 
-          <Box mt="auto" p="1.5rem rem 0 3rem">
-           <Divider />
-          <FlexBetween textTransform="none" gap="1rem" alignItems="center">
-         
+          {/* Rodapé / Espaço futuro */}
+          <Box 
+          mt="auto" p="0.2rem 0 0 0rem"
  
-
-  </FlexBetween>
-</Box>
-
+          >
+            <Divider />
+              {/* Espaço reservado se quiser algo no rodapé */}
+            <Delfos />
+          </Box>
         </Drawer>
       )}
     </Box>

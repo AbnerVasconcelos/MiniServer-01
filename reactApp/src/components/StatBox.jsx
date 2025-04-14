@@ -7,6 +7,7 @@ import InfoIcon from '@mui/icons-material/Info';
 
 const StatBox = ({
   title,
+  socketVariavel,
   value,
   increase,
   icon,
@@ -27,7 +28,7 @@ const StatBox = ({
     // Remove o efeito após 500ms
     setTimeout(() => setIsClicked(false), 500);
     // Envia a mensagem com o estado invertido de 'ligado'
-    const data = { [title]: !ligado };
+    const data = { [socketVariavel]: !ligado };
     socket.emit("mensagem", data);
     console.log("Mensagem enviada via socket.io:", data);
   };
