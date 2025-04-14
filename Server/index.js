@@ -52,10 +52,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const allowedOrigins = [
   "http://localhost:3000",
   "http://192.168.196.45:3000",
+  "http://192.168.196.100:3000",
   "http://192.168.196.33:3000",
-  "http://192.168.56.1:3000",
-  "http://192.168.15.76:3000",
-  "http://192.168.15.11:3000",
+
+
 ];
 
 app.use(
